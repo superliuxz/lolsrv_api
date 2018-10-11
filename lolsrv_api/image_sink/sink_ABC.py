@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class SinkABC(ABC):
-
     @abstractmethod
     def save(self, commit_repo: str, commit_date: str, commit_sha: str, commit_img):
         """save an individual lol commit
