@@ -1,18 +1,19 @@
 import logging
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.http.multipartparser import MultiPartParserError
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
 from lolsrv_api.helper import load_class_from_path
-from lolsrv_api.settings.lolsrv_api_settings import IMG_SINK_PATH
 
 
 logger = logging.getLogger("django")
 
-sink = load_class_from_path(IMG_SINK_PATH)()
+sink = load_class_from_path(settings.IMG_SINK_PATH)()
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -22,10 +23,19 @@ class Uplol(View):
     def post(self, request, *args, **kwargs):
         logger.info("hit POST...")
 
+        try:
+            request.POST
+        except MultiPartParserError as e:
+            logger.info(e)
+            return HttpResponseBadRequest()
+
         commit_repo = request.POST.get("repo")
         commit_date = request.POST.get("date")
         commit_sha = request.POST.get("sha")
         commit_img = request.FILES.get("lol")
+
+        if not any([commit_repo, commit_date, commit_sha, commit_img]):
+            return HttpResponseBadRequest()
 
         sink.save(commit_repo, commit_date, commit_sha, commit_img)
 
