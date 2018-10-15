@@ -20,6 +20,6 @@ from lolsrv_api.views import Lols, Uplol
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
-    url(r"^lols/?$", Lols.as_view()),
-    url(r"^uplol/?$", Uplol.as_view()),
+    url(r"^lols/?$", Lols.as_view(), name="lols"),
+    url(r"^uplol/?$", Uplol.as_view(), name="uplol"),
 ]
