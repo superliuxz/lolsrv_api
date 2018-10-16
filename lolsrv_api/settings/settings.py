@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "lolsrv_api"
 ]
 
 MIDDLEWARE = [
@@ -73,10 +74,19 @@ WSGI_APPLICATION = "lolsrv_api.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+DATABASE_NAME = os.environ.get("DATABASE_NAME", "")
+DATABASE_USER = os.environ.get("DATABASE_USER", "")
+DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD", "")
+DATABASE_HOST = os.environ.get("DATABASE_HOST", "")
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DATABASE_NAME,
+        'USER': DATABASE_USER,
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': DATABASE_HOST,
+        'PORT': '5432',
     }
 }
 
