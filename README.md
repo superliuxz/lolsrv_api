@@ -36,3 +36,9 @@ For `autoenv`, the `.env` file:
 export DJANGO_SETTINGS_MODULE=lolsrv_api.settings.settings_<YOUR NAME>
 workon lolsrv_api
 ```
+
+---
+**TODOs**
+
+- [ ] deployable to Google Cloud
+- [ ] save images to persistent file system instead of database
