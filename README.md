@@ -38,7 +38,15 @@ workon lolsrv_api
 ```
 
 ---
+Run with docker:
+- Make sure the docker container has access to the database
+- Make sure `DJANGO_SETTINGS_MODULE`, `DATABASE_NAME`, `DATABASE_USER`,
+`DATABASE_PASSWORD` and `DATABASE_HOST` are set.
+
+---
 **TODOs**
 
+- [x] dockerize the runtime
 - [ ] deployable to Google Cloud
 - [ ] save images to persistent file system instead of database
+- [ ] better database credential management
