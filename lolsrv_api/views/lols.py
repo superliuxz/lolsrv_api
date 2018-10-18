@@ -9,11 +9,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
 from lolsrv_api.helper import load_class_from_path
+from lolsrv_api.image_sink import SinkABC
 
 
 logger = logging.getLogger("django")
 
-sink = load_class_from_path(settings.IMG_SINK_PATH)()
+if not hasattr(settings, "IMG_SINK_PATH"):
+    setattr(settings, "IMG_SINK_PATH", "lolsrv_api.image_sink.DatabaseSink")
+sink_class = load_class_from_path(settings.IMG_SINK_PATH)
+if not issubclass(sink_class, SinkABC):
+    sink_class = load_class_from_path("lolsrv_api.image_sink.DatabaseSink")
+sink = sink_class()
 
 
 @method_decorator(csrf_exempt, name="dispatch")
