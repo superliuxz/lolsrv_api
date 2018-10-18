@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only: circleci
+    working_directory: ~/lolsrv_api
+    docker:
+      - image: circleci/python:3.6.6-jessie
+        environment:
+          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+          DATABASE_NAME: circle_test
+          DATABASE_USER: root
+          DATABASE_HOST: localhost
+          DJANGO_SETTINGS_MODULE: lolsrv_api.settings.settings
+      - image: circleci/postgres:10.5-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+      - run: pip3 install -r requirements.txt
+      - run: python manage.py test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tr1
