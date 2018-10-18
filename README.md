@@ -1,5 +1,7 @@
 # lolsrv_api
+[![CircleCI](https://circleci.com/gh/superliuxz/lolsrv_api/tree/master.svg?style=svg)](https://circleci.com/gh/superliuxz/lolsrv_api/tree/master)
 
+---
 API specifications: https://github.com/lolcommits/lolcommits-lolsrv
 
 Tested under Python 3.6.6 and Postgres 10.
