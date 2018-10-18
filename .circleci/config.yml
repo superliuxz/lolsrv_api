@@ -1,8 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only: circleci
     working_directory: ~/lolsrv_api
     docker:
       - image: circleci/python:3.6.6-jessie
