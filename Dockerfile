@@ -25,7 +25,9 @@ WORKDIR /app
 RUN mkdir -p /app/lolsrv_api
 COPY lolsrv_api /app/lolsrv_api
 COPY manage.py /app
-COPY requirements.txt /app
-RUN pip3 install -r requirements.txt
+COPY Pipfile /app
+COPY Pipfile.lock /app
+RUN pip install pipenv
+RUN pipenv install
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
